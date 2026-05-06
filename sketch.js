@@ -2,6 +2,8 @@ var mode = 0;
 
 let splash;
 
+let currentMusic;
+
 // var for game snakes
 let snake = [];
 let dir;
@@ -14,6 +16,39 @@ let score = 0;
 let gameOver = false;
 let monsterMode = false;
 let win = false;
+
+
+// music var 
+let normalMusic;
+let monsterMusic;
+let winMusic;
+let loseMusic;
+let audioStarted = false;
+
+
+// preload of musics
+function preload(){
+  normalMusic = loadSound('normalMusic.wav');
+  monsterMusic = loadSound('monsterMusic.wav');
+  winMusic = loadSound('winMusic.wav');
+  loseMusic = loadSound('loseMusic.wav');
+  
+  
+}
+
+
+// music play
+function playMusic(music) {
+  if (currentMusic != music) {
+    if (currentMusic && currentMusic.isPlaying()) {
+      currentMusic.stop();
+    }
+
+    currentMusic = music;
+    currentMusic.loop();
+  }
+}
+
 
 // setup 
 function setup() {
@@ -46,22 +81,29 @@ function draw() {
 }
 
 
-// 游戏进度(where all snakes move,run, eats, chase by the monsters, game ends etc...)
+// 游戏进度(where all snakes move,run, eats, chase by the monsters, game ends etc...) (with all the music controls here. )
 function letGameStart(){
   background(255)
+  if (audioStarted == false) {
+  userStartAudio();
+  audioStarted = true;
+}
   frameRate(mySlider.value());// control the speed of the gam e. 5 slow, 20 fast.
   
   if(win == true){
+    playMusic(winMusic);
     fill(0, 255, 255)
     textAlign(CENTER)
     textSize(50)
     text('congratulation', width / 2, height / 2);
+    return;
   }
   
   
   if(gameOver == true){
-    fill(255, 100, 0)
-    textAlign(CENTER)
+    playMusic(loseMusic);
+    fill(255, 100, 0);
+    textAlign(CENTER);
     textSize(40)
     text("game Over", width / 2, height / 2)
     
@@ -69,6 +111,16 @@ function letGameStart(){
     text('to restart the game, plz refresh the page', width /2, height/2 +40 )
     return;
   } 
+  
+  if (monsterMode == true) {
+
+  playMusic(monsterMusic);
+
+} else {
+
+  playMusic(normalMusic);
+
+}
   
   drawGrid()
   
@@ -107,8 +159,6 @@ function letGameStart(){
   drawSnake();
     drawFood()
     
-  
-
   drawMonsters()
   
   fill(255,0,0);
@@ -124,8 +174,8 @@ function drawSnake(){
   fill(0,255,0)
   noStroke()
   
-  for (let s of snake){// (s represent the part of the snake)
-    rect(s.x * grid, s.y * grid, grid, grid);//how the snake is drawn (the size of the snake is 20*20 becuase of grid * grid)
+  for (let s of snake){// (s represent the part of the snake) 把蛇的每一节都拿出来 （本质loop）
+    rect(s.x * grid, s.y * grid, grid, grid);//how the snake is drawn (the size of the snake is 20*20 becuase of grid * grid) 用grid 是因为后面也用的是grid。
   }
 }
 
@@ -150,7 +200,7 @@ function spawnMonsters(){
   for (let i = 0; i < 3; i++){
     monsters.push(createVector(
       floor(random(width / grid)),
-      floor(random(width / grid))
+      floor(random(height / grid))
       ));  
   }
 }

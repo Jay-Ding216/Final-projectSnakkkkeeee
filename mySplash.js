@@ -22,7 +22,7 @@ class Splash {
   this.name = createDiv("Jay");
   this.name.position(this.splashBorder+20, this.splashBorder+60);
   
-  this.info = createDiv("This is a game inpired by the classic game snake.This game mainly focus on movement and surivival.Each time the snake eats a piece of food, it grows longer and earns point. When it reaches to a specific number of scores, there will be monsters come to get you! You can win the game when the score reach to 10! <p> Enjoy the game! <p> <a href=https://editor.p5js.org/Dzzzzjj/full/U9DKUDmyq>view code</a>");
+  this.info = createDiv("This is a game inpired by the classic game snake.This game mainly focus on movement and surivival.Each time the snake eats a piece of food, it grows longer and earns point. When it reaches to a specific number of scores, there will be monsters come to get you! You can win the game when the score reach to 10! <p> Enjoy the game! <p> <a href=https://editor.p5js.org/Dzzzzjj/sketches/U9DKUDmyq>view code</a>");
   
   this.info.position(this.splashBorder+20, this.splashBorder+100);
   this.info.size(windowWidth-this.splashBorder*2-50, windowHeight-this.splashBorder*2-50)
