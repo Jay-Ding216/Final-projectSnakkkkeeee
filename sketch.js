@@ -112,3 +112,7 @@ function restartGame() {
   gameOver = false;
   placeFood();
 }
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}
